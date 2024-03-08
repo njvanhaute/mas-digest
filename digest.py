@@ -53,11 +53,13 @@ def parse_html() -> List[CafeAd]:
     return ad_list
 
 def main():
+    print("Starting script.")
     db = Database()
 
     ads = parse_html()
 
     if db.is_empty():
+        print("Init run, adding baseline ads to DB.")
         db.add_ads(ads)
         sys.exit(0)
     
@@ -73,10 +75,15 @@ def main():
     html_message = MIMEText(email_content, 'html')
     html_message['Subject'] = f'{datetime.now().strftime("%H:%M")} Digest'
 
-    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
-        server.login(APP_EMAIL, APP_PASS)
-        for sub_email in db.get_sub_emails():
-            server.sendmail(APP_EMAIL, sub_email, html_message.as_string())
+    try:
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
+            server.login(APP_EMAIL, APP_PASS)
+            for sub_email in db.get_sub_emails():
+                server.sendmail(APP_EMAIL, sub_email, html_message.as_string())
+
+    except smtplib.SMTPAuthenticationError as err:
+        print(err)
+        raise err
 
     print(f"{str(len(recent_ads))} new ads.")
     db.add_ads(recent_ads)
