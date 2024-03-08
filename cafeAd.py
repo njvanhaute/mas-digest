@@ -3,6 +3,6 @@ from datetime import datetime
 
 @dataclass
 class CafeAd:
+    id: int
     name: str
     date_posted: datetime
-    link: str

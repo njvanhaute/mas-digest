@@ -1,3 +1,6 @@
+# Database file
+*.sqlite3
+
 # HTML files for testing
 *.html
 
