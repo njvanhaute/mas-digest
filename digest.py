@@ -61,8 +61,7 @@ def main():
     ads = parse_html()
 
     if db.is_empty():
-        for ad in ads:
-            db.add_ad(ad)
+        db.add_ads(ads)
         sys.exit(0)
     
     start_date = db.most_recent_date_posted()
@@ -77,6 +76,7 @@ def main():
         for sub_email in db.get_sub_emails():
             server.sendmail(APP_EMAIL, sub_email, html_message.as_string())
 
+    db.add_ads(recent_ads)
 
 if __name__ == '__main__':
     main()

@@ -33,6 +33,10 @@ class Database:
         self._cur.execute(command, args)
         self._con.commit()
 
+    def add_ads(self, ads: List[CafeAd]) -> None:
+        for ad in ads:
+            self.add_ad(ad)
+
     def most_recent_date_posted(self) -> datetime:
         command = "SELECT date_posted FROM ads ORDER BY ad_id DESC LIMIT 1"
         self._cur.execute(command)
