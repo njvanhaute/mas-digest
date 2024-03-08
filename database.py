@@ -38,6 +38,17 @@ class Database:
         self._cur.execute(command)
         date_posted, = self._cur.fetchone()
         return date_posted
+    
+    def add_email(self, email: str):
+        command = "INSERT INTO subscribers(email_addr) VALUES(?)"
+        args = (email,)
+        self._cur.execute(command, args)
+        self._con.commit()
+    
+    def get_sub_emails(self) -> List[str]:
+        command = "SELECT email_addr from subscribers"
+        self._cur.execute(command)
+        return list(self._cur.fetchall())
 
     def close(self) -> None:
         self._con.close()

@@ -1,3 +1,6 @@
+# Secrets file
+credentials.json
+
 # Database file
 *.sqlite3
 
