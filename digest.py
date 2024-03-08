@@ -48,7 +48,7 @@ def parse_html() -> List[CafeAd]:
         ad_id = int(div.attrs['id'])
         ad_name = div_classtitle.string
         date_str = (''.join(list(itertools.dropwhile(lambda x: x != 'P', div_replyarea.p.text))))[8:-4]
-        ad_date = datetime.strptime(date_str, '%b %d, %Y %I:%M %p %Z')
+        ad_date = datetime.strptime(date_str, '%b %d, %Y %I:%M %p')
         ad = CafeAd(ad_id, ad_name, ad_date)
         ad_list.append(ad)
 
