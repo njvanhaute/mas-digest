@@ -65,8 +65,9 @@ def main():
     recent_ads = list(filter(lambda a: a.date_posted > start_date, ads))
 
     if not recent_ads:
+        print(f'No new ads since {start_date.strftime("%H:%M")}')
         sys.exit(0)
-        
+
     email_content = generate_email_content(recent_ads, start_date)
     
     html_message = MIMEText(email_content, 'html')
@@ -77,6 +78,7 @@ def main():
         for sub_email in db.get_sub_emails():
             server.sendmail(APP_EMAIL, sub_email, html_message.as_string())
 
+    print(f"{str(len(recent_ads))} new ads.")
     db.add_ads(recent_ads)
 
 if __name__ == '__main__':
