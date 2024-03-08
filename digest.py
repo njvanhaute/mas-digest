@@ -22,7 +22,7 @@ SCOPES = [
 
 
 def get_link(ad_id: int):
-    return 'https://www.mandolincafe.com/' + str(ad_id) + '#' + str(ad_id)
+    return 'https://www.mandolincafe.com/ads/' + str(ad_id) + '#' + str(ad_id)
 
 def generate_email_content(ads: List[CafeAd], start_date: datetime) -> str:
     if not ads:
