@@ -24,10 +24,7 @@ SCOPES = [
 def get_link(ad_id: int):
     return 'https://www.mandolincafe.com/ads/' + str(ad_id) + '#' + str(ad_id)
 
-def generate_email_content(ads: List[CafeAd], start_date: datetime) -> str:
-    if not ads:
-        return 'No new mandolins for sale since last email!'
-    
+def generate_email_content(ads: List[CafeAd], start_date: datetime) -> str:    
     content = f'New mandolins for sale as of {start_date.strftime("%H:%M")}:<br><br>'
 
     for ad in ads:
@@ -66,6 +63,10 @@ def main():
     
     start_date = db.most_recent_date_posted()
     recent_ads = list(filter(lambda a: a.date_posted > start_date, ads))
+
+    if not recent_ads:
+        sys.exit(0)
+        
     email_content = generate_email_content(recent_ads, start_date)
     
     html_message = MIMEText(email_content, 'html')
